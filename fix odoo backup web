@@ -1,0 +1,17 @@
+nano /usr/lib/python3/dist-packages/odoo/tools/misc.py
+
+
+def exec_pg_command(*args, **kwargs):
+    """Execute a PostgreSQL command.
+
+    args: the command to run
+    kwargs: additional parameters passed to subprocess.Popen
+    """
+    kwargs.setdefault('stdout', subprocess.DEVNULL)
+    kwargs.setdefault('stderr', subprocess.DEVNULL)
+    if 'stdin' not in kwargs:
+        kwargs['stdin'] = subprocess.DEVNULL
+    _logger.debug('Running command: %r', args)
+    return subprocess.Popen(args, **kwargs).wait()
+
+
